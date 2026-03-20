@@ -6,7 +6,7 @@ import TwitchSection from '@/components/TwitchSection'
 
 const stats = [
   { value: '24/7', label: 'Онлайн' },
-  { value: '1.21', label: 'Версия' },
+  { value: '1.21.11', label: 'Версия' },
   { value: 'Semi-RP', label: 'Тип' },
 ]
 
