@@ -90,10 +90,18 @@ export default function HomeContent({ liveStreams }: { liveStreams: any[] }) {
               Survival · Semi-RP · Community
             </span>
           </div>
-          <span style={{ fontSize: 'clamp(96px, 18vw, 180px)', fontWeight: 700, letterSpacing: '-0.04em', color: '#fff', display: 'block' }}>SMT</span>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 52, fontFamily: 'monospace' }}>
-            Играй свою историю. Строй свой мир.
-          </p>
+         {/* Теперь это правильный заголовок H1 для поисковиков, но выглядит так же круто */}
+<h1 style={{ margin: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  <span style={{ fontSize: 'clamp(96px, 18vw, 180px)', fontWeight: 700, letterSpacing: '-0.04em', color: '#fff', lineHeight: 1 }}>SMT</span>
+  <span style={{ fontSize: 'clamp(18px, 3vw, 24px)', fontWeight: 500, color: 'rgba(255,255,255,0.9)', marginTop: -10, marginBottom: 20 }}>
+    Ванильный приватный сервер
+  </span>
+</h1>
+
+{/* Описание с ключевыми словами (Semi-RP, выживание, 1.21) */}
+<p style={{ fontSize: 15, color: 'rgba(255,255,255,0.4)', maxWidth: 600, lineHeight: 1.6, marginBottom: 52 }}>
+  Приватный сервер на версии 1.21.11 У нас <b>Semi-RP</b> (полу-РП) атмосфера, честная экономика и нет гриферов. Играй свою историю и строй свой мир вместе с нами!
+</p>
           <div style={{ display: 'flex', gap: 12 }}>
             <button onClick={() => setIsModalOpen(true)} style={{ padding: '14px 36px', borderRadius: 10, background: '#fff', color: '#0a0a0c', border: 'none', cursor: 'pointer', fontWeight: 600 }}>
               Начать играть

@@ -2,8 +2,33 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'SMT — Minecraft Server',
-  description: 'Играй свою историю. Строй свой мир.',
+  title: 'SMT — Ванильный приватный Semi-RP сервер Minecraft',
+  description: 'Присоединяйся к SMT — ванильному приватному серверу Майнкрафт с элементами полу-РП (Semi-RP). Честная игра, адекватное комьюнити, лор и интересные ивенты. Подавай заявку!',
+  keywords: [
+    'ванильный сервер майнкрафт', 
+    'приватный сервер', 
+    'SMT', 
+    'SMT сервер', 
+    'полурп', 
+    'semi-rp', 
+    'майнкрафт выживание', 
+    'сервер без грифа',
+    'проходка',
+    'СМТ',
+    'СШМ'
+  ],
+  openGraph: {
+    title: 'SMT — Ванильный приватный Semi-RP сервер',
+    description: 'Частный Майнкрафт сервер для комфортной игры. Без читов, без грифа, с упором на лор и экономику.',
+    url: 'https://твой-домен.ru', // Замени на свой реальный домен!
+    siteName: 'SMT Minecraft',
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
