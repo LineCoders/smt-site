@@ -51,13 +51,15 @@ export default function TwitchSection({ liveStreams }: { liveStreams: any[] }) {
 
             {/* КОНТЕЙНЕР ПЛЕЕРА */}
             <div style={{ aspectRatio: '16/9', width: '100%', background: '#000' }}>
-              <TwitchPlayer 
-                channel={stream.user_login} 
-                width="100%" 
-                height="100%" 
-                muted 
-                autoplay={false}
-              />
+<TwitchPlayer 
+  id={`twitch-player-${stream.user_login}`} // Добавляем уникальный ID
+  key={stream.user_login} // И ключ для React
+  channel={stream.user_login} 
+  width="100%" 
+  height="100%" 
+  muted 
+  autoplay={false}
+/>
             </div>
           </div>
         ))}
