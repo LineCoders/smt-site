@@ -76,7 +76,10 @@ export default function HomeContent({ liveStreams }: { liveStreams: any[] }) {
 
   return (
     <>
-      <Navbar onScrollTo={scrollTo} />
+      <Navbar 
+  onScrollTo={scrollTo} 
+  onOpenApply={() => setIsModalOpen(true)} 
+/>
 
       {/* HERO */}
       <section style={{ position: 'relative', minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>

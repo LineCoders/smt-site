@@ -1,8 +1,11 @@
 'use client'
+import { useState } from 'react' // Добавили useState
 import Navbar from '@/components/Navbar'
 import Particles from '@/components/Particles'
+import ApplyModal from '@/components/ApplyModal' // Добавили импорт модалки
 
 const rules = [
+  // ... твой массив правил (без изменений)
   {
     num: '01',
     title: 'Уважение к игрокам',
@@ -45,9 +48,23 @@ const rules = [
 ]
 
 export default function RulesPage() {
+  // 1. Создаем состояние для модалки
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 2. Функция для скролла (заглушка для правил, так как мы на другой странице)
+  const scrollTo = (id: string) => {
+    if (typeof window !== 'undefined') {
+      window.location.href = `/#${id}`;
+    }
+  };
+
   return (
     <main style={{ background: '#0a0a0c', minHeight: '100vh', color: '#fff' }}>
-      <Navbar />
+      {/* 3. Передаем функции в Navbar */}
+      <Navbar 
+        onScrollTo={scrollTo} 
+        onOpenApply={() => setIsModalOpen(true)} 
+      />
 
       <section style={{ position: 'relative', overflow: 'hidden' }}>
         <Particles />
@@ -66,6 +83,7 @@ export default function RulesPage() {
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 120, background: 'linear-gradient(transparent, #0a0a0c)', pointerEvents: 'none' }} />
       </section>
 
+      {/* Секция с правилами (твой код без изменений) */}
       <section style={{ padding: '0 60px 140px', maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {rules.map(({ num, title, desc, items }, ri) => (
@@ -103,6 +121,9 @@ export default function RulesPage() {
           </div>
         </div>
       </section>
+
+      {/* 4. Добавляем саму модалку в конец страницы */}
+      <ApplyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '28px 60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: 1200, margin: '0 auto' }}>
         <span style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.2)' }}>SMT</span>
