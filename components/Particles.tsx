@@ -17,10 +17,11 @@ export default function Particles() {
     let W = 0, H = 0, raf = 0, t = 0
     const nodes: Particle[] = []
 
-    function resize() {
-      W = canvas.width  = canvas.offsetWidth
-      H = canvas.height = canvas.offsetHeight
-    }
+function resize() {
+  if (!canvas) return; // Если канваса нет — просто выходим и не паримся
+  W = canvas.width  = canvas.offsetWidth
+  H = canvas.height = canvas.offsetHeight
+}
 
     function mkNode(): Particle {
       return {
