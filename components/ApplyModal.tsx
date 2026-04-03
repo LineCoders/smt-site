@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const inputStyle = {
   width: '100%',
@@ -22,15 +22,51 @@ const initialData = {
   contentCreator: 'Нет',
   onlineTime: '',
   plans: '',
-  source: ''
+  source: '',
+  agreeRules: false,
 }
 
 export default function ApplyModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
   const [formData, setFormData] = useState(initialData)
+  const [show, setShow] = useState(isOpen)
+  const [isClosing, setIsClosing] = useState(false)
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (isOpen) {
+      setShow(true)
+      setIsClosing(false)
+      return
+    }
+    if (show) {
+      setIsClosing(true)
+      const timer = setTimeout(() => setShow(false), 220)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen, show])
+
+  useEffect(() => {
+    if (!show) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [show])
+
+  const handleClose = () => {
+    setIsClosing(true)
+    setTimeout(() => {
+      setIsClosing(false)
+      setShow(false)
+      setFormData(initialData)
+      setSent(false)
+      onClose()
+    }, 220)
+  }
+
+  if (!show) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +77,17 @@ export default function ApplyModal({ isOpen, onClose }: { isOpen: boolean, onClo
         alert('Заполните, пожалуйста, все поля в анкете.');
         return;
       }
+    }
+
+    const age = Number(formData.age);
+    if (Number.isNaN(age) || age < 15) {
+      alert('Возраст должен быть не менее 15 лет.');
+      return;
+    }
+
+    if (!formData.agreeRules) {
+      alert('Нужно согласиться с правилами, чтобы продолжить.');
+      return;
     }
 
     setLoading(true);
@@ -57,7 +104,7 @@ export default function ApplyModal({ isOpen, onClose }: { isOpen: boolean, onClo
         setTimeout(() => {
           setSent(false);
           setFormData(initialData);
-          onClose();
+          handleClose();
         }, 2000);
       } else {
         alert('Ошибка отправки заявки');
@@ -70,11 +117,11 @@ export default function ApplyModal({ isOpen, onClose }: { isOpen: boolean, onClo
   };
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20, backdropFilter: 'blur(8px)' }}>
-      <div style={{ background: '#0f0f12', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 24, padding: '30px 40px', width: '100%', maxWidth: 550, maxHeight: '90vh', overflowY: 'auto' }}>
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', opacity: isClosing ? 0 : 1, transition: 'opacity 220ms ease', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20, backdropFilter: 'blur(8px)' }}>
+      <div style={{ background: '#0f0f12', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 24, padding: '30px 40px', width: '100%', maxWidth: 550, maxHeight: '90vh', overflowY: 'auto', transform: isClosing ? 'scale(0.96)' : 'scale(1)', transition: 'transform 220ms ease' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
           <h2 style={{ fontSize: 24, fontWeight: 600 }}>Анкета игрока</h2>
-          <button onClick={() => { setFormData(initialData); setSent(false); onClose() }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: 24 }}>✕</button>
+          <button onClick={handleClose} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: 24 }}>✕</button>
         </div>
 
         {sent ? (
@@ -133,6 +180,11 @@ export default function ApplyModal({ isOpen, onClose }: { isOpen: boolean, onClo
 
             <label style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>Откуда узнал о нас? *
               <input required className="input-glow" style={inputStyle} value={formData.source} onChange={e => setFormData({ ...formData, source: e.target.value })} />
+            </label>
+
+            <label style={{ display: 'flex', alignItems: 'center', marginTop: 4, color: 'rgba(255,255,255,0.7)', gap: 10 }}>
+              <input type="checkbox" checked={formData.agreeRules} onChange={e => setFormData({ ...formData, agreeRules: e.target.checked })} />
+              <span style={{ fontSize: 12 }}>Я прочитал(а) и согласен(на) с правилами сервера *</span>
             </label>
 
             <button type="submit" disabled={loading} className="btn-glow" style={{ padding: '16px', borderRadius: 12, background: '#fff', color: '#000', fontWeight: 700, border: 'none', cursor: 'pointer', marginTop: 10, transition: 'opacity 0.2s' }}>
