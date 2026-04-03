@@ -81,6 +81,22 @@ export default function ApplyPage() {
     return nonEmpty && !Number.isNaN(age) && age >= 15 && formData.agreeRules
   }, [formData])
 
+  const validationMessage = useMemo(() => {
+    if (!formData.agreeRules) return 'Необходимо согласиться с правилами.'
+    const age = Number(formData.age)
+    if (!formData.age) return 'Заполните возраст.'
+    if (Number.isNaN(age) || age < 15) return 'Возраст должен быть не менее 15 лет.'
+
+    const fields = ['name', 'contact', 'onlineTime', 'plans', 'source'] as const
+    for (const field of fields) {
+      if (!formData[field].toString().trim()) {
+        return 'Заполните все обязательные поля.'
+      }
+    }
+
+    return ''
+  }, [formData])
+
   const saveApp = (app: ApplicationData) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(app))
@@ -245,6 +261,7 @@ export default function ApplyPage() {
               </label>
 
               {error && <div style={{ color: '#fda4af', minHeight: 20 }}>{error}</div>}
+              {!isFormValid && validationMessage && <div style={{ color: '#facc15', minHeight: 20 }}>{validationMessage}</div>}
 
               <button type="submit" disabled={!isFormValid || loading} style={{ padding: '14px 20px', borderRadius: 10, border: 'none', background: isFormValid ? '#fff' : 'rgba(255,255,255,0.3)', color: '#000', fontWeight: 700, cursor: isFormValid ? 'pointer' : 'not-allowed' }}>
                 {loading ? 'Отправка...' : 'Отправить заявку'}
