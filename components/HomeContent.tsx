@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Particles from '@/components/Particles'
 import TwitchSection from '@/components/TwitchSection'
-import ApplyModal from '@/components/ApplyModal'
 
 const stats = [
   { value: '24/7', label: 'Онлайн' },
@@ -32,7 +32,7 @@ const inputStyle = {
 
 export default function HomeContent({ liveStreams }: { liveStreams: any[] }) {
   const [copied, setCopied] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const router = useRouter()
 
   function copyIP() {
     navigator.clipboard.writeText('play.smt-mc.ru')
@@ -50,7 +50,7 @@ export default function HomeContent({ liveStreams }: { liveStreams: any[] }) {
     <>
       <Navbar 
   onScrollTo={scrollTo} 
-  onOpenApply={() => setIsModalOpen(true)} 
+  onOpenApply={() => router.push('/apply')} 
 />
 
       {/* HERO */}
@@ -75,7 +75,7 @@ export default function HomeContent({ liveStreams }: { liveStreams: any[] }) {
   Приватный сервер на версии 1.21.11 У нас <b>Semi-RP</b> (полу-РП) атмосфера, честная экономика и нет гриферов. Играй свою историю и строй свой мир вместе с нами!
 </p>
           <div className="animate-fade-up" style={{ display: 'flex', gap: 12, animationDelay: '0.48s' }}>
-            <button className="btn-glow" onClick={() => setIsModalOpen(true)} style={{ padding: '14px 36px', borderRadius: 10, background: '#fff', color: '#0a0a0c', border: 'none', cursor: 'pointer', fontWeight: 600 }}>
+            <button className="btn-glow" onClick={() => router.push('/apply')} style={{ padding: '14px 36px', borderRadius: 10, background: '#fff', color: '#0a0a0c', border: 'none', cursor: 'pointer', fontWeight: 600 }}>
               Начать играть
             </button>
             <a className="btn-glow" href="https://discord.gg/35knDpq4YU" target="_blank" rel="noreferrer" style={{ padding: '14px 36px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', color: '#fff', textDecoration: 'none' }}>
@@ -120,8 +120,6 @@ export default function HomeContent({ liveStreams }: { liveStreams: any[] }) {
           ))}
         </div>
       </section>
-
-      <ApplyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* FOOTER */}
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '28px 60px', textAlign: 'center' }}>
