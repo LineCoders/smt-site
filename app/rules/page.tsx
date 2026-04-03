@@ -66,17 +66,17 @@ export default function RulesPage() {
         onOpenApply={() => setIsModalOpen(true)} 
       />
 
-      <section style={{ position: 'relative', overflow: 'hidden' }}>
+      <section className="hero-glow" style={{ position: 'relative', overflow: 'hidden' }}>
         <Particles />
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 1200, margin: '0 auto', padding: '160px 60px 80px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
             <div style={{ width: 24, height: 1, background: 'rgba(255,255,255,0.2)' }} />
-            <span style={{ fontSize: 11, letterSpacing: '0.28em', color: 'rgba(255,255,255,0.28)', textTransform: 'uppercase', fontFamily: 'monospace' }}>SMT</span>
+            <span className="animate-fade-up" style={{ fontSize: 11, letterSpacing: '0.28em', color: 'rgba(255,255,255,0.28)', textTransform: 'uppercase', fontFamily: 'monospace', animationDelay: '0.08s' }}>SMT</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(48px, 7vw, 96px)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: 28 }}>
+          <h1 className="glow-title glow-animate animate-fade-up" style={{ fontSize: 'clamp(48px, 7vw, 96px)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: 28, animationDelay: '0.14s' }}>
             Правила<br />сервера
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.38)', lineHeight: 1.8, fontWeight: 300, maxWidth: 520 }}>
+          <p className="animate-fade-up" style={{ fontSize: 16, color: 'rgba(255,255,255,0.38)', lineHeight: 1.8, fontWeight: 300, maxWidth: 520, animationDelay: '0.25s' }}>
             SMT — приватное сообщество. Эти правила существуют не для ограничений, а чтобы каждый мог играть в комфортной атмосфере.
           </p>
         </div>
@@ -87,7 +87,11 @@ export default function RulesPage() {
       <section style={{ padding: '0 60px 140px', maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {rules.map(({ num, title, desc, items }, ri) => (
-            <div key={num} style={{ border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+            <div
+              key={num}
+              className="card-glow animate-fade-up"
+              style={{ border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden', animationDelay: `${ri * 0.12 + 0.08}s` }}
+            >
               <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', background: 'rgba(255,255,255,0.02)' }}>
                 <div style={{ padding: '40px 32px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
                   <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)', fontFamily: 'monospace', letterSpacing: '0.08em' }}>{num}</span>

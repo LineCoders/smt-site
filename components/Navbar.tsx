@@ -25,19 +25,20 @@ export default function Navbar({ onScrollTo, onOpenApply }: NavbarProps) {
       </button>
       
       <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-        <button onClick={() => handleNav('about')} style={navBtnStyle}>
+        <button onClick={() => handleNav('about')} style={navBtnStyle} className="nav-link">
           О сервере
         </button>
-        <button onClick={() => router.push('/rules')} style={{ ...navBtnStyle, color: pathname === '/rules' ? '#fff' : 'rgba(255,255,255,0.4)' }}>
+        <button onClick={() => router.push('/rules')} style={{ ...navBtnStyle, color: pathname === '/rules' ? '#fff' : 'rgba(255,255,255,0.4)' }} className="nav-link">
           Правила
         </button>
-        <a href="https://discord.gg/35knDpq4YU" target="_blank" rel="noreferrer" style={{ ...navBtnStyle, textDecoration: 'none' }}>
+        <a href="https://discord.gg/35knDpq4YU" target="_blank" rel="noreferrer" style={{ ...navBtnStyle, textDecoration: 'none' }} className="nav-link">
           Discord
         </a>
         
         {/* Обновленная кнопка */}
         <button 
           onClick={onOpenApply} 
+          className="btn-glow"
           style={{ 
             fontSize: 13, 
             fontWeight: 600, 

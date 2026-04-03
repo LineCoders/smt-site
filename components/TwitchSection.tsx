@@ -10,7 +10,7 @@ export default function TwitchSection({ liveStreams }: { liveStreams: any[] }) {
       {/* Заголовок секции в твоем стиле */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 40 }}>
         <div style={{ width: 24, height: 1, background: 'rgba(255,255,255,0.2)' }} />
-        <span style={{ fontSize: 11, letterSpacing: '0.28em', color: '#ff4b4b', textTransform: 'uppercase', fontFamily: 'monospace' }}>
+        <span className="glow-animate animate-fade-up" style={{ fontSize: 11, letterSpacing: '0.28em', color: '#ff4b4b', textTransform: 'uppercase', fontFamily: 'monospace', animationDelay: '0.12s' }}>
           ● ПРЯМОЙ ЭФИР
         </span>
       </div>
@@ -23,15 +23,20 @@ export default function TwitchSection({ liveStreams }: { liveStreams: any[] }) {
         gap: '24px',
         justifyContent: 'start' // Карточки будут прижаты к левому краю
       }}>
-        {liveStreams.map((stream) => (
-          <div key={stream.id} style={{ 
+        {liveStreams.map((stream, idx) => (
+          <div
+            key={stream.id}
+            className="card-glow animate-fade-up"
+            style={{
+              animationDelay: `${idx * 0.12 + 0.06}s`,
             border: '1px solid rgba(255,255,255,0.07)', 
             borderRadius: 16, 
             overflow: 'hidden', 
             background: 'rgba(255,255,255,0.02)',
             display: 'flex',
             flexDirection: 'column'
-          }}>
+            }}
+          >
             {/* Шапка карточки с ником */}
             <div style={{ 
               padding: '16px 20px', 
@@ -46,7 +51,7 @@ export default function TwitchSection({ liveStreams }: { liveStreams: any[] }) {
                     {stream.title.length > 45 ? stream.title.slice(0, 45) + '...' : stream.title}
                   </div>
                </div>
-               <div style={{ fontSize: 10, background: '#ff4b4b', padding: '2px 8px', borderRadius: 4, fontWeight: 700, color: '#fff' }}>LIVE</div>
+               <div className="glow-animate" style={{ fontSize: 10, background: '#ff4b4b', padding: '2px 8px', borderRadius: 4, fontWeight: 700, color: '#fff' }}>LIVE</div>
             </div>
 
             {/* КОНТЕЙНЕР ПЛЕЕРА */}
