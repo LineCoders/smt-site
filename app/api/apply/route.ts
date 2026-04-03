@@ -44,6 +44,9 @@ export async function POST(req: Request) {
     if (existing && existing.status === 'pending') {
       return NextResponse.json({ error: 'Заявка уже находится на рассмотрении' }, { status: 409 })
     }
+    if (existing && existing.status === 'approved') {
+      return NextResponse.json({ error: 'Ваша заявка уже одобрена, повторная подача не разрешена' }, { status: 409 })
+    }
 
     const id = crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`
     const application: ApplicationData = {

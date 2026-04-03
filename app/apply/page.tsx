@@ -113,6 +113,11 @@ export default function ApplyPage() {
       return
     }
 
+    if (application?.status === 'approved') {
+      setError('Ваша заявка уже одобрена. Новую заявку отправлять нельзя.')
+      return
+    }
+
     if (!formData.agreeRules) {
       setError('Необходимо согласиться с правилами сервера')
       return
@@ -209,6 +214,21 @@ export default function ApplyPage() {
             </div>
           )}
 
+          {application && (
+            <div style={{ marginBottom: 16, padding: 16, borderRadius: 12, border: '1px solid rgba(255,255,255,0.25)', background: 'rgba(0,0,0,0.5)' }}>
+              <div style={{
+                fontSize: '1.2rem',
+                fontWeight: 700,
+                color: application.status === 'approved' ? '#22c55e' : application.status === 'rejected' ? '#f43f5e' : '#eab308',
+                textAlign: 'center',
+              }}>
+                {application.status === 'approved' && '✅ Заявка одобрена'}
+                {application.status === 'rejected' && `❌ Заявка отклонена${application.reason ? `: ${application.reason}` : ''}`}
+                {application.status === 'pending' && '⏳ Заявка на рассмотрении'}
+              </div>
+            </div>
+          )}
+
           <div style={{ marginBottom: 16 }}>
             <button onClick={() => router.push('/')} style={{ marginRight: 12, padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.06)', color: '#fff' }}>
               На главную
@@ -222,6 +242,8 @@ export default function ApplyPage() {
             <h2 style={{ marginTop: 0 }}>Новая заявка</h2>
             {application?.status === 'pending' ? (
               <div style={{ color: '#facc15', padding: '24px', border: '1px solid rgba(250,204,21,0.5)', borderRadius: 10 }}>Ваша заявка находится на рассмотрении. Новые заявки можно отправлять после решения.</div>
+            ) : application?.status === 'approved' ? (
+              <div style={{ color: '#22c55e', padding: '24px', border: '1px solid rgba(34,197,94,0.4)', borderRadius: 10 }}>Ваша заявка одобрена. Повторная подача не требуется.</div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 12 }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
